@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "projects": {
+    "jumbo-api": "apps/jumbo-api",
+    "jumbo-front": "apps/jumbo-front",
+    "jumbo-front-e2e": "apps/jumbo-front-e2e"
+  }
+}

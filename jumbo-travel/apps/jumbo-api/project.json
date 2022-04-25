@@ -1,0 +1,52 @@
+{
+  "root": "apps/jumbo-api",
+  "sourceRoot": "apps/jumbo-api/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/jumbo-api",
+        "main": "apps/jumbo-api/src/main.ts",
+        "tsConfig": "apps/jumbo-api/tsconfig.app.json",
+        "assets": ["apps/jumbo-api/src/assets"]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/jumbo-api/src/environments/environment.ts",
+              "with": "apps/jumbo-api/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:node",
+      "options": {
+        "buildTarget": "jumbo-api:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/jumbo-api/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/jumbo-api"],
+      "options": {
+        "jestConfig": "apps/jumbo-api/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
