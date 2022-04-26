@@ -7,9 +7,7 @@ import {filter} from "rxjs";
 })
 export class AuthService {
 
-
-  constructor(private oauthService: OAuthService) {
-  }
+  constructor(private oauthService: OAuthService) {}
 
 
   async initAuth() {
