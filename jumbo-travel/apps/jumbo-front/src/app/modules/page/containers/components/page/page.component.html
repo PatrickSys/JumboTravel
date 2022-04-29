@@ -1,4 +1,6 @@
-<jumbo-travel-side
-  (burgerClicked)="handleLogin()">
+<jumbo-sidenav
+  (burgerClicked)="handleLogin()"
+  [sideNavMode]="sideNavMode"
+>
   <router-outlet></router-outlet>
-</jumbo-travel-side>
+</jumbo-sidenav>

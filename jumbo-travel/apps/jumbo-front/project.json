@@ -17,7 +17,7 @@
           "apps/jumbo-front/src/favicon.ico",
           "apps/jumbo-front/src/assets"
         ],
-        "styles": ["apps/jumbo-front/src/styles.css"],
+        "styles": ["apps/jumbo-front/src/styles.scss"],
         "scripts": []
       },
       "configurations": {
