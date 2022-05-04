@@ -15,9 +15,9 @@ export class PageComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  async handleLogin() {
+  handleLogin() {
    // this.sideNavMode = 'over';
-    //await this.authService.login();
+     this.authService.login();
   }
 
 }

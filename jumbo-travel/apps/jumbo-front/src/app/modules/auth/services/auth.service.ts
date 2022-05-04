@@ -1,16 +1,23 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from "@angular/core";
 import { AuthConfig, OAuthService } from "angular-oauth2-oidc";
-import {filter} from "rxjs";
+import { BehaviorSubject, filter, Observable, Subject } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService  {
 
-  constructor(private oauthService: OAuthService) {}
+  private isLoggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable()
+
+  constructor(private oauthService: OAuthService) {
+
+    this.initAuth();
+  }
 
 
-  async initAuth() {
+
+  initAuth() {
 
     const authCodeFlowConfig: AuthConfig = {
       // Url of the Identity Provider
@@ -23,14 +30,14 @@ export class AuthService {
       // The SPA's id. The SPA is registerd with this id at the auth-server
       // clientId: 'server.code',
       clientId: 'JumboTravel',
-
+      silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
 
       // Just needed if your auth server demands a secret. In general, this
       // is a sign that the auth server is not configured with SPAs in mind
       // and it might not enforce further best practices vital for security
       // such applications
-      dummyClientSecret: 'XTTWDsOd5p2HwT6ALapFfNUfGIjVzPDd',
-
+      dummyClientSecret: '0rtyI1TtYrQTKZQi99KyJm3C3jgQh7CD',
+      useSilentRefresh: true,
       responseType: 'code',
 
       // set the scope for the permissions the client should request
@@ -40,30 +47,34 @@ export class AuthService {
       scope: 'openid profile email offline_access web-origins',
 
       showDebugInformation: true,
-      requireHttps: this.isHttps()
+      requireHttps: false
     };
 
     this.oauthService.configure(authCodeFlowConfig);
     this.oauthService.setupAutomaticSilentRefresh();
+    this.oauthService.timeoutFactor = 0.1;
+    //
+    // this.oauthService.events.pipe(filter(event => event.type === 'invalid_nonce_in_state')).subscribe( event => {
+    //   console.error(event, ' kpasakisosio')
+    //   if (this.oauthService.hasValidIdToken()) {
+    //     console.log('watata')
+    //     // Bypass on refresh with valid token
+    //   } else {
+    //     console.log('wowto')
+    //     this.oauthService.tryLogin();
+    //   }
+    // });
 
-    this.oauthService.events.pipe(filter(event => event.type === 'invalid_nonce_in_state')).subscribe( event => {
-      console.error(event, ' kpasakisosio')
-      if (this.oauthService.hasValidIdToken()) {
-        console.log('watata')
-        // Bypass on refresh with valid token
-      } else {
-        console.log('wowto')
-        this.oauthService.tryLogin();
-      }
-    });
-
+   //this.login();
   }
 
-  public async login() {
-
-    await this.oauthService.loadDiscoveryDocumentAndTryLogin().then(doc => {
-      console.log(doc)
-      this.oauthService.initImplicitFlow();
+  public login() {
+    this.oauthService.loadDiscoveryDocumentAndTryLogin({
+      onTokenReceived: receivedTokens => {
+          this.isLoggedInSubject.next(this.oauthService.hasValidAccessToken())
+      }
+    }).then(doc => {
+      this.oauthService.initCodeFlow();
     });
 
   }
