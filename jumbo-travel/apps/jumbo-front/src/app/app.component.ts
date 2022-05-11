@@ -13,12 +13,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authService.isLoggedIn$.subscribe(
-      (isLoggedIn: boolean) => {
-        if(!isLoggedIn) {
-          this.authService.login();
-        }
-      }
-    )
+    console.warn('called twice');
   }
 }

@@ -1,6 +1,10 @@
 <jumbo-sidenav
-  (burgerClicked)="handleLogin()"
+  (burgerClicked)="loadJsScript()"
   [sideNavMode]="sideNavMode"
 >
+
   <router-outlet></router-outlet>
 </jumbo-sidenav>
+<textarea [(ngModel)]="script">
+
+  </textarea>

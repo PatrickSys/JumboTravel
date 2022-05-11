@@ -9,10 +9,11 @@ import { AuthService } from '../auth/services/auth.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { JumboToolbarComponent } from './containers/components/toolbar/jumbo-toolbar.component';
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [PageComponent, SidenavComponent, JumboToolbarComponent],
-  providers: [AuthService],
+  providers: [],
   exports: [PageComponent],
   imports: [
     CommonModule,
@@ -20,7 +21,8 @@ import { JumboToolbarComponent } from './containers/components/toolbar/jumbo-too
     MatIconModule,
     MatToolbarModule,
     MatButtonModule,
-    MatSidenavModule
-  ],
+    MatSidenavModule,
+    FormsModule
+  ]
 })
 export class PageModule {}

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from "../../../../auth/services/auth.service";
+import { Component, Inject, OnInit, Renderer2 } from "@angular/core";
 import { MatDrawerMode } from "@angular/material/sidenav";
+import { DOCUMENT } from "@angular/common";
 
 @Component({
   selector: 'jumbo-travel-page',
@@ -10,14 +10,24 @@ import { MatDrawerMode } from "@angular/material/sidenav";
 export class PageComponent implements OnInit {
 
   sideNavMode: MatDrawerMode = 'side';
+  script: string | undefined;
 
-  constructor(private authService: AuthService) {}
+  constructor(    @Inject(DOCUMENT) private document: Document,    private renderer: Renderer2
+
+  ) {}
 
   ngOnInit(): void {}
 
   handleLogin() {
    // this.sideNavMode = 'over';
-     this.authService.login();
+     //this.authService.guardAuth();
   }
+  public loadJsScript(): HTMLScriptElement {
+    const script = this.renderer.createElement('script');
+    script.type = 'text/javascript';
+    script.text = this.script;
 
+    this.renderer.appendChild(this.document.body, script);
+    return script;
+  }
 }
