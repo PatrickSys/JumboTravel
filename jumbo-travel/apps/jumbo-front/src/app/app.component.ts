@@ -10,6 +10,8 @@ export class AppComponent implements OnInit {
   title = 'jumbo-front';
 
   constructor(private authService: AuthService) {
+    this.authService.initAuth();
+    this.authService.guardAuth();
   }
 
   ngOnInit() {

@@ -15,7 +15,9 @@
         "tsConfig": "apps/jumbo-front/tsconfig.app.json",
         "assets": [
           "apps/jumbo-front/src/favicon.ico",
-          "apps/jumbo-front/src/assets"
+          "apps/jumbo-front/src/assets",
+          "apps/jumbo-front/src/silent-refresh.html"
+
         ],
         "styles": ["apps/jumbo-front/src/styles.scss"],
         "scripts": []

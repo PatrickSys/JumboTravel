@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from "@angular/core";
-import { AuthConfig, OAuthService } from "angular-oauth2-oidc";
+import { AuthConfig, OAuthService, ReceivedTokens } from "angular-oauth2-oidc";
 import { BehaviorSubject, filter, Observable, Subject } from "rxjs";
 
 @Injectable({
@@ -7,22 +7,14 @@ import { BehaviorSubject, filter, Observable, Subject } from "rxjs";
 })
 export class AuthService  {
 
-  private isLoggedInSubject: Subject<boolean> = new Subject<boolean>();
+  private isLoggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable()
   isLoggedIn: boolean = false;
 
-  constructor(private oauthService: OAuthService) {
-    this.initAuth();
-    this.guardAuth();
-  }
-
+  constructor(private oauthService: OAuthService) {}
 
 
   initAuth() {
-    if(this.oauthService.hasValidAccessToken()) {
-      return;
-    }
-    console.log('called once');
 
     const authCodeFlowConfig: AuthConfig = {
       // Url of the Identity Provider
@@ -52,22 +44,14 @@ export class AuthService  {
       scope: 'openid profile email offline_access web-origins',
 
       showDebugInformation: true,
-      requireHttps: false,
+      requireHttps: this.isHttps(),
       clearHashAfterLogin: true
     };
 
     this.oauthService.configure(authCodeFlowConfig);
     this.oauthService.setupAutomaticSilentRefresh();
     this.oauthService.timeoutFactor = 0.1;
-
-
-
-    this.oauthService.events.pipe(filter(event => event.type === 'token_received')).subscribe( event => {
-      this.isLoggedInSubject.next(this.oauthService.hasValidAccessToken());
-      console.log(this.oauthService.hasValidAccessToken(), ' ea');
-    });
-
-
+    this.isLoggedIn = this.oauthService.hasValidAccessToken();
 
     //
     // this.oauthService.events.pipe(filter(event => event.type === 'invalid_nonce_in_state')).subscribe( event => {
@@ -84,23 +68,30 @@ export class AuthService  {
   }
 
   public guardAuth(): void {
+
+
     this.isLoggedIn$.subscribe((isLoggedIn: boolean) => {
-      console.log(isLoggedIn, 'here dude');
+      this.isLoggedIn = isLoggedIn;
+
       if (!isLoggedIn) {
-        console.log('entersherebud');
         this.oauthService.loadDiscoveryDocumentAndTryLogin({
         }).then(doc => {
-          console.log('heyou');
-          this.oauthService.initCodeFlow();
-        });
+          if(!this.oauthService.hasValidAccessToken()) {
+            this.oauthService.initCodeFlow();
+           // this.oauthService.tryLogin({
+           //   onTokenReceived: (info: ReceivedTokens): void => {
+           //     const what = this.oauthService.hasValidAccessToken();
+           //     this.isLoggedInSubject.next(what)
+           //   }
+           // });
+          }});
        }
     });
 
-    this.isLoggedInSubject.next(this.oauthService.hasValidAccessToken())
   }
 
   public logoff() {
-    this.oauthService.logOut();
+    this.oauthService.revokeTokenAndLogout().then(() => this.isLoggedInSubject.next(false));
   }
 
   public get name() {

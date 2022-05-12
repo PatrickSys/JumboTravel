@@ -9,10 +9,7 @@ import { MatDrawerMode, MatSidenav } from "@angular/material/sidenav";
 export class SidenavComponent implements OnInit {
 
   @Input()
-  sideNavMode: MatDrawerMode = 'push'
-
-  @Output()
-  burgerClicked: EventEmitter<any> = new EventEmitter();
+  sideNavMode: MatDrawerMode = 'over'
 
   @ViewChild('sideNav') sidenavRef: MatSidenav | undefined
 
@@ -21,12 +18,7 @@ export class SidenavComponent implements OnInit {
   ngOnInit(): void {}
 
   openSideNav() {
-
-    this.sidenavRef?.toggle().then(() => {
-      console.log(this.sideNavMode);
-    })
-
-    this.burgerClicked.emit();
+    this.sidenavRef?.toggle();
   }
 
 }
