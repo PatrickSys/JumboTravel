@@ -9,7 +9,8 @@
     "build": "nx build",
     "test": "nx test",
     "front": "nx run jumbo-front:serve",
-    "api": "nx run jumbo-api:serve"
+    "api": "nx run jumbo-api:serve",
+    "jumbo": "concurrently \"npm run front\"  \"npm run api\""
   },
   "private": true,
   "dependencies": {

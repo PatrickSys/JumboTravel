@@ -1,6 +1,8 @@
-import { Injectable, OnInit } from "@angular/core";
-import { AuthConfig, OAuthService, ReceivedTokens } from "angular-oauth2-oidc";
-import { BehaviorSubject, filter, Observable, Subject } from "rxjs";
+import { Injectable } from "@angular/core";
+import { AuthConfig, OAuthService } from "angular-oauth2-oidc";
+import { BehaviorSubject, Observable } from "rxjs";
+import { EventsManagerService } from "@jumbo/core";
+import { Events } from "../../../../../../../libs/core/src/lib/core/events/events.enum";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,11 @@ export class AuthService  {
   isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable()
   isLoggedIn: boolean = false;
 
-  constructor(private oauthService: OAuthService) {}
+  constructor(private oauthService: OAuthService,
+              private eventsManager: EventsManagerService) {
+    this.listenLogOutEvent();
+  }
+
 
 
   initAuth() {
@@ -90,10 +96,15 @@ export class AuthService  {
 
   }
 
-  public logoff() {
-    this.oauthService.revokeTokenAndLogout().then(() => this.isLoggedInSubject.next(false));
+  public listenLogOutEvent() {
+    this.eventsManager.listenEvent(Events.logOut, this.logOut());
+
   }
 
+  private logOut() {
+    console.log('heyou');
+    this.oauthService.revokeTokenAndLogout().then(() => this.isLoggedInSubject.next(false));
+  }
   public get name() {
     const claims = this.oauthService.getIdentityClaims();
     if (!claims) {

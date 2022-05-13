@@ -11,14 +11,9 @@ export class SidenavComponent implements OnInit {
   @Input()
   sideNavMode: MatDrawerMode = 'over'
 
-  @ViewChild('sideNav') sidenavRef: MatSidenav | undefined
 
   constructor() {}
 
   ngOnInit(): void {}
-
-  openSideNav() {
-    this.sidenavRef?.toggle();
-  }
 
 }

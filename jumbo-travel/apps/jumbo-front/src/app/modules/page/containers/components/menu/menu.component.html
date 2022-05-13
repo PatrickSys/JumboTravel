@@ -1,8 +1,14 @@
-<button mat-button [matMenuTriggerFor]="menu"
-        class="account-button"
->Menu</button>
+<button mat-button
+        [matMenuTriggerFor]="menu"
+        class="account-button">
+  <mat-icon>account_circle</mat-icon>
+</button>
 <mat-menu #menu="matMenu">
-  <button mat-menu-item>
-    <mat-icon>account_circle</mat-icon>
-    account_trigger</button>
+  <button mat-menu-item
+          (click)="logOut()"
+  >
+    <mat-icon>logout</mat-icon>
+    <span>Log out</span>
+  </button>
 </mat-menu>
+
