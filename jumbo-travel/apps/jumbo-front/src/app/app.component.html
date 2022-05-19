@@ -1,1 +1,6 @@
-<jumbo-sidenav></jumbo-sidenav>
+<jumbo-sidenav
+  *ngIf="isLoggedIn"
+></jumbo-sidenav>
+<jumbo-travel-loading
+  [loading]="!isLoggedIn"
+></jumbo-travel-loading>

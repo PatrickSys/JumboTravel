@@ -6,8 +6,8 @@ import { RouterModule } from '@angular/router';
 import { PageModule } from "./modules/page/page.module";
 import { OAuthModule } from "angular-oauth2-oidc";
 import { HttpClientModule } from "@angular/common/http";
-import { NoopAnimationPlayer } from "@angular/animations";
-import { BrowserAnimationsModule, NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { CoreModule } from "@jumbo/core";
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,7 +17,8 @@ import { BrowserAnimationsModule, NoopAnimationsModule } from "@angular/platform
     PageModule,
     OAuthModule.forRoot(),
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent],

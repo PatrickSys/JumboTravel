@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { AuthConfig, OAuthService } from "angular-oauth2-oidc";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, filter, Observable, ReplaySubject } from "rxjs";
 import { EventsManagerService } from "@jumbo/core";
 import { Events } from "../../../../../../../libs/core/src/lib/core/events/events.enum";
 
@@ -9,12 +9,14 @@ import { Events } from "../../../../../../../libs/core/src/lib/core/events/event
 })
 export class AuthService  {
 
-  private isLoggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private isLoggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.oauthService.hasValidAccessToken());
   isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable()
   isLoggedIn: boolean = false;
 
   constructor(private oauthService: OAuthService,
               private eventsManager: EventsManagerService) {
+    this.isLoggedIn = this.oauthService.hasValidAccessToken();
+    this.isLoggedInSubject.next(this.isLoggedIn)
     this.listenLogOutEvent();
   }
 
@@ -28,7 +30,7 @@ export class AuthService  {
 
       tokenEndpoint: 'http://localhost:6500/realms/master/protocol/openid-connect/token',
       // URL of the SPA to redirect the user to after login
-      redirectUri: window.location.origin ,
+      redirectUri: window.location.origin,
 
       // The SPA's id. The SPA is registerd with this id at the auth-server
       // clientId: 'server.code',
@@ -56,30 +58,33 @@ export class AuthService  {
 
     this.oauthService.configure(authCodeFlowConfig);
     this.oauthService.setupAutomaticSilentRefresh();
-    this.oauthService.timeoutFactor = 0.1;
+   // this.oauthService.timeoutFactor = 0.1;
     this.isLoggedIn = this.oauthService.hasValidAccessToken();
 
-    //
-    // this.oauthService.events.pipe(filter(event => event.type === 'invalid_nonce_in_state')).subscribe( event => {
-    //   console.error(event, ' kpasakisosio')
-    //   if (this.oauthService.hasValidIdToken()) {
-    //     console.log('watata')
-    //     // Bypass on refresh with valid token
-    //   } else {
-    //     console.log('wowto')
-    //     this.oauthService.tryLogin();
-    //   }
-    // });
 
+    this.oauthService.events.subscribe(eventt => {
+      console.log(eventt);
+    })
+
+    this.oauthService.events.pipe(filter(event => event.type === 'token_received')).subscribe( event => {
+      this.isLoggedInSubject.next(this.oauthService.hasValidAccessToken())
+      // if (this.oauthService.hasValidIdToken()) {
+      //   // Bypass on refresh with valid token
+      // } else {
+      //   console.log('wowto')
+      //   this.oauthService.tryLogin();
+      // }
+    });
   }
 
   public guardAuth(): void {
 
-
     this.isLoggedIn$.subscribe((isLoggedIn: boolean) => {
       this.isLoggedIn = isLoggedIn;
 
+      console.log(isLoggedIn, 'islogg');
       if (!isLoggedIn) {
+        console.log('wwasa');
         this.oauthService.loadDiscoveryDocumentAndTryLogin({
         }).then(doc => {
           if(!this.oauthService.hasValidAccessToken()) {
@@ -97,7 +102,7 @@ export class AuthService  {
   }
 
   public listenLogOutEvent() {
-    this.eventsManager.listenEvent(Events.logOut, this.logOut());
+    this.eventsManager.listenEvent(Events.logOut, this.logOut);
 
   }
 

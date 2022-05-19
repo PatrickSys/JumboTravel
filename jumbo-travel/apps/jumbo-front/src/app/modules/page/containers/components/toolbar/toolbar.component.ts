@@ -21,6 +21,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   logOut(): void {
+    console.log('ha');
     this.eventsManager.sendEvent(Events.logOut);
   }
 

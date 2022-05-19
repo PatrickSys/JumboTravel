@@ -9,12 +9,23 @@ import { AuthService } from './modules/auth/services/auth.service';
 export class AppComponent implements OnInit {
   title = 'jumbo-front';
 
+  _isLoggedIn: boolean = this.authService.isLoggedIn;
+
   constructor(private authService: AuthService) {
+
+    console.log(window.location);
     this.authService.initAuth();
     this.authService.guardAuth();
+    this.authService.isLoggedIn$.subscribe((isLoggedIn: boolean) => {
+      this._isLoggedIn = isLoggedIn;
+    });
   }
 
   ngOnInit() {
-    console.warn('called twice');
+
+  }
+
+  get isLoggedIn(): boolean {
+    return <boolean>this._isLoggedIn;
   }
 }

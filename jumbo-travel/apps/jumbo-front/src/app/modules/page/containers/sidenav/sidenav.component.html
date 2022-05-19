@@ -2,7 +2,11 @@
   <mat-sidenav
     #sideNav
     [mode]="sideNavMode"
-  >SideNav</mat-sidenav>
+  >
+    <button
+      mat-raised-button
+    ></button>
+  </mat-sidenav>
   <mat-sidenav-content>
    <jumbo-toolbar
      (burgerClicked)="sideNav.toggle()"

@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from "@angular/core";
-import { MatDrawerMode, MatSidenav } from "@angular/material/sidenav";
+import { Component, Input, OnInit } from "@angular/core";
+import { MatDrawerMode } from "@angular/material/sidenav";
 
 @Component({
   selector: 'jumbo-sidenav',
