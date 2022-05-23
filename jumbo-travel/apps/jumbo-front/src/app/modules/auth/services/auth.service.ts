@@ -3,6 +3,7 @@ import { AuthConfig, OAuthService } from "angular-oauth2-oidc";
 import { BehaviorSubject, filter, Observable, ReplaySubject } from "rxjs";
 import { EventsManagerService } from "@jumbo/core";
 import { Events } from "../../../../../../../libs/core/src/lib/core/events/events.enum";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class AuthService  {
   isLoggedIn: boolean = false;
 
   constructor(private oauthService: OAuthService,
-              private eventsManager: EventsManagerService) {
+              private eventsManager: EventsManagerService,
+              private router: Router) {
     this.isLoggedIn = this.oauthService.hasValidAccessToken();
     this.isLoggedInSubject.next(this.isLoggedIn)
     this.listenLogOutEvent();
@@ -29,6 +31,8 @@ export class AuthService  {
       issuer: 'http://localhost:6500/auth/realms/master',
 
       tokenEndpoint: 'http://localhost:6500/realms/master/protocol/openid-connect/token',
+      revocationEndpoint: 'http://localhost:6500/auth/realms/master/protocol/openid-connect/revoke',
+      logoutUrl: window.location.origin,
       // URL of the SPA to redirect the user to after login
       redirectUri: window.location.origin,
 
@@ -59,7 +63,6 @@ export class AuthService  {
     this.oauthService.configure(authCodeFlowConfig);
     this.oauthService.setupAutomaticSilentRefresh();
    // this.oauthService.timeoutFactor = 0.1;
-    this.isLoggedIn = this.oauthService.hasValidAccessToken();
 
 
     this.oauthService.events.subscribe(eventt => {
@@ -67,7 +70,7 @@ export class AuthService  {
     })
 
     this.oauthService.events.pipe(filter(event => event.type === 'token_received')).subscribe( event => {
-      this.isLoggedInSubject.next(this.oauthService.hasValidAccessToken())
+      //this.isLoggedInSubject.next(this.oauthService.hasValidAccessToken())
       // if (this.oauthService.hasValidIdToken()) {
       //   // Bypass on refresh with valid token
       // } else {
@@ -82,12 +85,12 @@ export class AuthService  {
     this.isLoggedIn$.subscribe((isLoggedIn: boolean) => {
       this.isLoggedIn = isLoggedIn;
 
-      console.log(isLoggedIn, 'islogg');
       if (!isLoggedIn) {
         console.log('wwasa');
         this.oauthService.loadDiscoveryDocumentAndTryLogin({
         }).then(doc => {
           if(!this.oauthService.hasValidAccessToken()) {
+            console.log('hasnotvalid');
             this.oauthService.initCodeFlow();
            // this.oauthService.tryLogin({
            //   onTokenReceived: (info: ReceivedTokens): void => {
@@ -95,20 +98,30 @@ export class AuthService  {
            //     this.isLoggedInSubject.next(what)
            //   }
            // });
-          }});
+          }
+          else {
+            this.isLoggedInSubject.next(true);
+          }
+        });
        }
     });
 
   }
 
   public listenLogOutEvent() {
-    this.eventsManager.listenEvent(Events.logOut, this.logOut);
+    this.eventsManager.listenEvent(Events.logOut, this.logOut.bind(this));
 
   }
 
   private logOut() {
-    console.log('heyou');
-    this.oauthService.revokeTokenAndLogout().then(() => this.isLoggedInSubject.next(false));
+   // this.oauthService.logOut(true);
+    //this.router.navigate([]);
+    //this.isLoggedInSubject.next(false)
+    //this.oauthService.initCodeFlow();
+
+    this.oauthService.revokeTokenAndLogout().then(() =>{
+      this.isLoggedInSubject.next(false);
+    });
   }
   public get name() {
     const claims = this.oauthService.getIdentityClaims();

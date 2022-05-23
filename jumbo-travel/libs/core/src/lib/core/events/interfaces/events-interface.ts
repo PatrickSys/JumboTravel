@@ -1,5 +1,6 @@
+import { Events } from "../events.enum";
 
 export interface EventsInterface {
-  name: Event;
+  name: Events;
   value?: string;
 }
