@@ -14,8 +14,7 @@ export class AppComponent implements OnInit {
   constructor(private authService: AuthService) {
 
     console.log(window.location);
-    this.authService.initAuth();
-    this.authService.guardAuth();
+
     this.authService.isLoggedIn$.subscribe((isLoggedIn: boolean) => {
       this._isLoggedIn = isLoggedIn;
     });

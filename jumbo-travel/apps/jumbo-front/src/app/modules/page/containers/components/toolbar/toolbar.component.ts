@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { EventsManagerService } from "@jumbo/core";
-import { Events } from "../../../../../../../../../libs/core/src/lib/core/events/events.enum";
+import { Events } from "../../../../../../../../../libs/core/src/lib/core/modules/events/events.enum";
 
 @Component({
   selector: 'jumbo-toolbar',

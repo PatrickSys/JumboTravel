@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { AuthConfig, OAuthService } from "angular-oauth2-oidc";
 import { BehaviorSubject, filter, Observable, ReplaySubject } from "rxjs";
 import { EventsManagerService } from "@jumbo/core";
-import { Events } from "../../../../../../../libs/core/src/lib/core/events/events.enum";
+import { Events } from "../../../../../../../libs/core/src/lib/core/modules/events/events.enum";
 import { Router } from "@angular/router";
 
 @Injectable({
@@ -12,17 +12,24 @@ export class AuthService  {
 
   private isLoggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.oauthService.hasValidAccessToken());
   isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable()
-  isLoggedIn: boolean = false;
 
   constructor(private oauthService: OAuthService,
               private eventsManager: EventsManagerService,
               private router: Router) {
-    this.isLoggedIn = this.oauthService.hasValidAccessToken();
+    this.initAuth();
+    this.guardAuth();
     this.isLoggedInSubject.next(this.isLoggedIn)
     this.listenLogOutEvent();
   }
 
 
+  private isTokenExpired(): boolean {
+    return new Date() > new Date(this.oauthService.getAccessTokenExpiration());
+  }
+
+  get isLoggedIn() {
+    return !this.isTokenExpired();
+  }
 
   initAuth() {
 
@@ -34,7 +41,7 @@ export class AuthService  {
       revocationEndpoint: 'http://localhost:6500/auth/realms/master/protocol/openid-connect/revoke',
       logoutUrl: window.location.origin,
       // URL of the SPA to redirect the user to after login
-      redirectUri: window.location.origin,
+      redirectUri: window.location.origin + '/auth-callback',
 
       // The SPA's id. The SPA is registerd with this id at the auth-server
       // clientId: 'server.code',
@@ -82,29 +89,29 @@ export class AuthService  {
 
   public guardAuth(): void {
 
-    this.isLoggedIn$.subscribe((isLoggedIn: boolean) => {
-      this.isLoggedIn = isLoggedIn;
-
-      if (!isLoggedIn) {
-        console.log('wwasa');
-        this.oauthService.loadDiscoveryDocumentAndTryLogin({
-        }).then(doc => {
-          if(!this.oauthService.hasValidAccessToken()) {
-            console.log('hasnotvalid');
-            this.oauthService.initCodeFlow();
-           // this.oauthService.tryLogin({
-           //   onTokenReceived: (info: ReceivedTokens): void => {
-           //     const what = this.oauthService.hasValidAccessToken();
-           //     this.isLoggedInSubject.next(what)
-           //   }
-           // });
-          }
-          else {
-            this.isLoggedInSubject.next(true);
-          }
-        });
-       }
-    });
+    // this.isLoggedIn$.subscribe((isLoggedIn: boolean) => {
+    //
+    //   if (!isLoggedIn) {
+    //     this.oauthService.loadDiscoveryDocumentAndTryLogin({
+    //     }).then(doc => {
+    //       debugger;
+    //       if(!this.isLoggedIn) {
+    //         this.oauthService.initCodeFlow();
+    //
+    //       }
+    //       // if(!this.oauthService.hasValidAccessToken()) {
+    //       //   console.log('hasnotvalid');
+    //       //  // this.oauthService.tryLogin({
+    //       //  //   onTokenReceived: (info: ReceivedTokens): void => {
+    //       //  //     const what = this.oauthService.hasValidAccessToken();
+    //       //  //     this.isLoggedInSubject.next(what)
+    //       //  //   }
+    //       //  // });
+    //       // }
+    //
+    //     });
+    //    }
+    // });
 
   }
 
@@ -118,9 +125,8 @@ export class AuthService  {
     //this.router.navigate([]);
     //this.isLoggedInSubject.next(false)
     //this.oauthService.initCodeFlow();
-
     this.oauthService.revokeTokenAndLogout().then(() =>{
-      this.isLoggedInSubject.next(false);
+      this.isLoggedInSubject.next(this.isLoggedIn);
     });
   }
   public get name() {
@@ -133,5 +139,21 @@ export class AuthService  {
 
   private isHttps(): boolean {
     return window.location.protocol === 'https';
+  }
+
+  public async ifMustBeCompletedAuthorization() {
+    if (!this.isLoggedIn) {
+      await this.completeAuthentication();
+    }
+  }
+  public startAuthentication(): void {
+    this.oauthService.loadDiscoveryDocumentAndLogin();
+  }
+
+  async completeAuthentication(): Promise<void> {
+    const hasLoggedIn = await this.oauthService.loadDiscoveryDocumentAndTryLogin();
+    if (hasLoggedIn) {
+      this.isLoggedInSubject.next(this.isLoggedIn);
+    }
   }
 }
