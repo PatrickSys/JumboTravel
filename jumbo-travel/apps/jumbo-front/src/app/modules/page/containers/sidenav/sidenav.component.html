@@ -1,11 +1,19 @@
 <mat-sidenav-container>
   <mat-sidenav
+    class="main-sidenav"
     #sideNav
     [mode]="sideNavMode"
   >
     <button
+      class="dashboard-button"
       mat-raised-button
-    ></button>
+    >
+      <span class="dashboard-text">
+        Manage plane stock
+      </span>
+      <mat-icon>airplane_ticket</mat-icon>
+    </button>
+
   </mat-sidenav>
   <mat-sidenav-content>
    <jumbo-toolbar

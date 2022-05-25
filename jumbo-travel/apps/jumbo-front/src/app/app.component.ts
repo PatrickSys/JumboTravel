@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './modules/auth/services/auth.service';
+import { WebsiteService } from "@jumbo/core";
 
 @Component({
   selector: 'jumbo-travel-root',
@@ -7,24 +8,19 @@ import { AuthService } from './modules/auth/services/auth.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'jumbo-front';
 
-  _isLoggedIn: boolean = this.authService.isLoggedIn;
+  private _isLoggedIn: boolean = this.authService.isLoggedIn;
 
-  constructor(private authService: AuthService) {
-
-    console.log(window.location);
-
+  constructor(private authService: AuthService,
+              private webService: WebsiteService) {
     this.authService.isLoggedIn$.subscribe((isLoggedIn: boolean) => {
       this._isLoggedIn = isLoggedIn;
     });
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   get isLoggedIn(): boolean {
-    return <boolean>this._isLoggedIn;
+    return this._isLoggedIn;
   }
 }
