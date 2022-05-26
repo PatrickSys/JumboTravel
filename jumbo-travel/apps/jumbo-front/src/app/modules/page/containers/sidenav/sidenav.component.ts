@@ -11,7 +11,6 @@ export class SidenavComponent implements OnInit {
   @Input()
   sideNavMode: MatDrawerMode = 'over'
 
-
   constructor() {}
 
   ngOnInit(): void {}

@@ -1,24 +1,15 @@
-<mat-sidenav-container>
-  <mat-sidenav
-    class="main-sidenav"
-    #sideNav
-    [mode]="sideNavMode"
-  >
-    <button
-      class="dashboard-button"
-      mat-raised-button
-    >
-      <span class="dashboard-text">
-        Manage plane stock
-      </span>
-      <mat-icon>airplane_ticket</mat-icon>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav class="main-sidenav" #sideNav [mode]="sideNavMode">
+    <img src="assets/menulogo.png" alt="menu logo" class="logo">
+    <button class="dashboard-button" mat-raised-button>
+      <mat-icon>support_agent</mat-icon>
+      <span>Dashboard</span>
     </button>
-
   </mat-sidenav>
+
   <mat-sidenav-content>
-   <jumbo-toolbar
-     (burgerClicked)="sideNav.toggle()"
-   ></jumbo-toolbar>
+    <jumbo-toolbar (burgerClicked)="sideNav.toggle()"></jumbo-toolbar>
     <jumbo-travel-page></jumbo-travel-page>
   </mat-sidenav-content>
+
 </mat-sidenav-container>

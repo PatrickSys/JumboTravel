@@ -1,15 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import { GlobalsInterface } from "../../interfaces/globals.interface";
-import { environment } from "../../../../../../../../apps/jumbo-front/src/environments/environment";
+import { AppConfigService } from "../config/app-config.service";
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class WebsiteService {
 
-  private readonly _globals: GlobalsInterface = environment.globals;
-  constructor() {}
+  private readonly _globals: GlobalsInterface = this.appConfigService.globals;
+
+  constructor(private appConfigService: AppConfigService) {
+  }
 
   get globals(): GlobalsInterface {
     return this._globals;

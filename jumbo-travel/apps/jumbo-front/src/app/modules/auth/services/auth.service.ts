@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { AuthConfig, OAuthService } from "angular-oauth2-oidc";
 import { BehaviorSubject, Observable } from "rxjs";
 import { EventsManagerService } from "@jumbo/core";
-import { WebsiteService } from "../../../../../../../libs/core/src/lib/core/shared/services/website/website.service";
+import { WebsiteService } from "@jumbo/core";
 
 @Injectable({
   providedIn: 'root'

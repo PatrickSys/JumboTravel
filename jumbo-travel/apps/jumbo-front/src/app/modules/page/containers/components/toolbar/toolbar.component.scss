@@ -1,3 +1,5 @@
+@import "../../../../../../styles";
+
 .company-title {
   font-size: 32px;
   margin-left: 64px;
@@ -6,3 +8,7 @@ mat-icon {
   font-size: 40px;
 }
 
+.main-toolbar {
+  background-color: $jumbo-primary-400;
+  color: white;
+}
