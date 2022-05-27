@@ -8,18 +8,21 @@ import { OAuthModule } from "angular-oauth2-oidc";
 import { HttpClientModule } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CoreModule, SharedModule } from "@jumbo/core";
+import { AppRoutingModule } from './modules/routing/app-routing.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    RouterModule.forRoot([], { initialNavigation: "enabledBlocking" }),
     PageModule,
     OAuthModule.forRoot(),
     HttpClientModule,
     BrowserAnimationsModule,
     CoreModule,
-    SharedModule
+    SharedModule,
+    AppRoutingModule,
+    DashboardModule
   ],
   providers: [],
   bootstrap: [AppComponent],

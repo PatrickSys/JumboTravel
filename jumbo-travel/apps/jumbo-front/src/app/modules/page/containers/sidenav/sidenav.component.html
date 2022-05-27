@@ -1,14 +1,16 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav class="main-sidenav" #sideNav [mode]="sideNavMode">
     <img src="assets/menulogo.png" alt="menu logo" class="logo">
-    <button class="dashboard-button" mat-raised-button>
+    <button class="dashboard-button" mat-raised-button
+            (click)="navigateAssistant()"
+    >
       <mat-icon>support_agent</mat-icon>
       <span>Dashboard</span>
     </button>
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <jumbo-toolbar (burgerClicked)="sideNav.toggle()"></jumbo-toolbar>
+    <jumbo-toolbar (burgerClicked)="toggleSideNav()"></jumbo-toolbar>
     <jumbo-travel-page></jumbo-travel-page>
   </mat-sidenav-content>
 
