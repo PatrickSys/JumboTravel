@@ -10,6 +10,7 @@ import { DevGlobals } from "@jumbo/core";
 export class AppConfigService {
 
   private readonly _globals: GlobalsInterface = environment.globals ?? DevGlobals;
+  userName: string | undefined;
 
   constructor() {
   }

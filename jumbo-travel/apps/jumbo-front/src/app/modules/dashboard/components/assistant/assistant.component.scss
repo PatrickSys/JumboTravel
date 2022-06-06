@@ -1,0 +1,27 @@
+@import "../../../../../styles";
+
+.table-container {
+  table {
+    width: 100%;
+  }
+  width: 80%;
+  margin-inline: auto;
+  padding-top: 64px;
+}
+
+.assistant-header {
+  text-align: -webkit-center;
+  margin-top: 48px;
+  font-size: 1.25rem;
+  font-family: monospace;
+
+}
+
+.buy-button {
+  width: 10vw;
+  background-color: #2b4fe7;
+  bottom: 256px;
+  color: white;
+  right: calc(50% - 5vw);
+  position: fixed;
+}

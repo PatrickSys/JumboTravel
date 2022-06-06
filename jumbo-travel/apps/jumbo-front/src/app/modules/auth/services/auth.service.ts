@@ -44,7 +44,7 @@ export class AuthService  {
       redirectUri: window.location.origin,
       clientId: 'JumboTravel',
       silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
-      dummyClientSecret: '6W9azJk4ngK3NAlE2PVFhZfDiZZYtmJL',
+      dummyClientSecret: 'UV1pQfRVx272052xtsgG742AtIdarsmn',
       useSilentRefresh: true,
       responseType: 'code',
       scope: 'openid profile email offline_access web-origins',
@@ -75,5 +75,10 @@ export class AuthService  {
   }
   private isHttps(): boolean {
     return window.location.protocol === 'https';
+  }
+
+  get userName(): string {
+    // @ts-ignore
+    return this.oauthService.getIdentityClaims().name;
   }
 }

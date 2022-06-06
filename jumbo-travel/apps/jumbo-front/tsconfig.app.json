@@ -8,7 +8,11 @@
       "@jumbo/core": ["libs/core/src/index.ts"]
     }
   },
-  "files": ["src/main.ts", "src/polyfills.ts"],
+  "files": [
+    "src/main.ts",
+    "src/polyfills.ts",
+    "src/app/modules/dashboard/interfaces/productstock.interface.ts"
+  ],
   "include": ["src/**/*.d.ts"],
   "exclude": ["**/*.test.ts", "**/*.spec.ts"]
 }

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from "@angular/router";
-import { AssistantComponent } from '../dashboard/assistant/assistant.component';
+import { AssistantComponent } from '../dashboard/components/assistant/assistant.component';
 
 const routes: Routes =  [
   { path: 'assistant', component: AssistantComponent}
