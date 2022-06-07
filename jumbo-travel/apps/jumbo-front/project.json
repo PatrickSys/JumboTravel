@@ -55,6 +55,11 @@
       "defaultConfiguration": "production"
     },
     "serve": {
+      "assets": [
+        "apps/jumbo-front/src/favicon.ico",
+        "apps/jumbo-front/src/assets",
+        "apps/jumbo-front/src/silent-refresh.html"
+      ],
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {

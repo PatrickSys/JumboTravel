@@ -44,13 +44,14 @@ export class AuthService  {
       redirectUri: window.location.origin,
       clientId: 'JumboTravel',
       silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
-      dummyClientSecret: 'UV1pQfRVx272052xtsgG742AtIdarsmn',
+      dummyClientSecret: 'mNN1ZR6kjl00UL0a59qqNtXibADRcYTq',
       useSilentRefresh: true,
       responseType: 'code',
       scope: 'openid profile email offline_access web-origins',
       showDebugInformation: true,
       requireHttps: this.isHttps(),
-      clearHashAfterLogin: true
+      clearHashAfterLogin: true,
+      sessionChecksEnabled: true,
     };
 
     this.oauthService.configure(authCodeFlowConfig);
@@ -60,6 +61,7 @@ export class AuthService  {
   private guardAuth(): void {
     this.isLoggedIn$.subscribe(async (isLoggedIn: boolean) => {
       if (!isLoggedIn) {
+        console.log(isLoggedIn);
         this.oauthService.loadDiscoveryDocumentAndTryLogin({}).then(() => {
           this.oauthService.initCodeFlow();
         });

@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res } from "@nestjs/common";
 import { PlanesService } from './planes.service';
 import { CreatePlaneDto } from './dto/create-plane.dto';
 import { UpdatePlaneDto } from './dto/update-plane.dto';
+import { UpdateProductDto } from "../products/dto/update-product.dto";
 
 @Controller('planes')
 export class PlanesController {
@@ -22,9 +23,12 @@ export class PlanesController {
     return this.planesService.findOne(+id);
   }
 
+
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePlaneDto: UpdatePlaneDto) {
-    return this.planesService.update(+id, updatePlaneDto);
+  async update(@Param('id') id: string  , @Body() updatePlaneDto: UpdatePlaneDto, @Res({ passthrough: true }) res: Response) {
+    const update = await this.planesService.update(id, updatePlaneDto);
+    if(!update) return  {...res.clone, status: 500, message: 'Error when updating plane, please check format'}
+    return update;
   }
 
   @Delete(':id')

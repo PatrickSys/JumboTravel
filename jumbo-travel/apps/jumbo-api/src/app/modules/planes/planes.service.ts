@@ -2,8 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { CreatePlaneDto } from './dto/create-plane.dto';
 import { UpdatePlaneDto } from './dto/update-plane.dto';
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
-import { Plane, PlaneDocument } from "../../schemas/plane.schema";
+import { Model, Types } from "mongoose";
+import { Plane, PlaneDocument, PlaneSchema } from "../../schemas/plane.schema";
+import { Product } from "../../schemas/product.schema";
+const { ObjectId } = require('mongodb');
 
 @Injectable()
 export class PlanesService {
@@ -16,14 +18,24 @@ export class PlanesService {
   }
 
   async findAll(): Promise<Plane[]> {
-    return this.planeModel.find().exec();
+    const found = await this.planeModel.find().populate({
+      path: 'productsStock',
+        populate: {
+          path: 'productInfo',
+          model: 'Product'
+      }
+    }).exec();
+
+    found.forEach(plane => plane.productsStock.forEach(prod => {}));
+    return found;
   }
+
   findOne(id: number) {
     return `This action returns a #${id} plane`;
   }
 
-  update(id: number, updatePlaneDto: UpdatePlaneDto) {
-    return `This action updates a #${id} plane`;
+  update(id: string, updatePlaneDto: UpdatePlaneDto) {
+    return this.planeModel.findOneAndUpdate({ _id: ObjectId(id) }, updatePlaneDto, {new: true}).exec();
   }
 
   remove(id: number) {

@@ -18,7 +18,7 @@ export class ProductsService {
     return this.http.get<ProductsInterface[]>(`${this.apiUrl}/products`);
   }
 
-  getProductsStock(): Observable<ProductstockInterface[]> {
-      return this.http.get<ProductstockInterface[]>(`${this.apiUrl}/productstock`);
+  getPlaneStock(): Observable<ProductstockInterface[]> {
+      return this.http.get<ProductstockInterface[]>(`${this.apiUrl}/plane`);
   }
 }
