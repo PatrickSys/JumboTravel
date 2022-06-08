@@ -45,7 +45,7 @@ export class AuthService  {
       redirectUri: window.location.origin,
       clientId: 'JumboTravel',
       silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
-      dummyClientSecret: 'mNN1ZR6kjl00UL0a59qqNtXibADRcYTq',
+      dummyClientSecret: 'UV1pQfRVx272052xtsgG742AtIdarsmn',
       useSilentRefresh: true,
       responseType: 'code',
       scope: 'openid profile email offline_access web-origins',
@@ -81,8 +81,8 @@ export class AuthService  {
   }
 
   get userName(): string {
-    // @ts-ignore
-    return this.oauthService.getIdentityClaims().name;
+    const wasa =  (this.oauthService.getIdentityClaims() as { name: string }).name;
+    return wasa;
   }
   get loginUser(): number {
     return +(this.oauthService.getIdentityClaims() as { preferred_username: string }).preferred_username;

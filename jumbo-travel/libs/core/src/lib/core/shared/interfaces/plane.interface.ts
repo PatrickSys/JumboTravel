@@ -1,13 +1,11 @@
 import { planeModel } from "../types/planeModel";
-import {
-  ProductsInterface
-} from "../../../../../../../apps/jumbo-front/src/app/modules/dashboard/interfaces/products.interface";
+import { ProductInterface } from "./product.interface";
 
 export interface PlaneInterface {
   model: planeModel;
   productsStock: [{
     product: {
-      productInfo: ProductsInterface,
+      productInfo: ProductInterface,
       stock: number
     }
   }];

@@ -1,9 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ProductsService } from "../../services/products.service";
-import { ProductsInterface } from "../../interfaces/products.interface";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { map, switchMap } from "rxjs";
-import { ProductstockInterface } from "../../interfaces/productstock.interface";
 import { Debugger } from "inspector";
 import {
   AppConfigService
@@ -11,6 +9,7 @@ import {
 import { Employee } from "apps/jumbo-api/src/app/schemas/employee.schema";
 import { EmployeesService } from "../../services/employees.service";
 import { Plane } from "../../../../../../../jumbo-api/src/app/schemas/plane.schema";
+import { ProductInterface } from "@jumbo/core";
 
 @Component({
   selector: 'jumbo-travel-assistant',
@@ -22,7 +21,7 @@ import { Plane } from "../../../../../../../jumbo-api/src/app/schemas/plane.sche
 export class AssistantComponent implements OnInit {
 
   displayedColumns: string[] = [ 'name', 'price', 'maxStock', 'stock', 'orderQuantity'];
-  products: ProductsInterface[] | undefined;
+  products: ProductInterface[] | undefined;
   formControl = new FormControl(0, [Validators.required, Validators.min(0)]);
   formGroup: FormGroup;
   //_products: ProductsInterface[] | undefined;

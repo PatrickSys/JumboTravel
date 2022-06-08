@@ -18,7 +18,7 @@ export class Employee {
   name: string;
 
   @ApiProperty()
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Plane", required: true })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Plane", required: false })
   plane: string;
 
   @ApiProperty()

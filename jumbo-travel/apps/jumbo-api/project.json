@@ -1,5 +1,6 @@
 {
   "root": "apps/jumbo-api",
+  "type": "module",
   "sourceRoot": "apps/jumbo-api/src",
   "projectType": "application",
   "targets": {

@@ -26,6 +26,8 @@ export class PageComponent implements OnInit {
   ngOnInit(): void {
     this.appConfig.userName = this.authService.userName;
     this.appConfig.loginUser = this.authService.loginUser;
+
+    if(!this.appConfig.loginUser) return;
     this.employeesService.findEmployeeByidentifier(this.appConfig.loginUser).pipe(map((employee: EmployeeInterface) => employee.role))
       .subscribe((role: role) => {
       this.router.navigate([`/${role}`])
