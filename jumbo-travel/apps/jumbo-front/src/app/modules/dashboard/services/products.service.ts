@@ -18,7 +18,11 @@ export class ProductsService {
     return this.http.get<ProductsInterface[]>(`${this.apiUrl}/products`);
   }
 
-  getPlaneStock(): Observable<ProductstockInterface[]> {
-      return this.http.get<ProductstockInterface[]>(`${this.apiUrl}/plane`);
+  getPlane(): Observable<ProductstockInterface[]> {
+      return this.http.get<ProductstockInterface[]>(`${this.apiUrl}/planes`);
+  }
+
+  getPlaneById(id: string): Observable<any> {
+    return this.http.get<ProductstockInterface[]>(`${this.apiUrl}/planes/${id}`);
   }
 }

@@ -1,8 +1,10 @@
+import { ApiProperty } from "@nestjs/swagger";
+import { Prop } from "@nestjs/mongoose";
+
 export interface ProductsInterface {
-  _id: string;
   name: string;
   price: number;
   maxStock: number;
-  orderQuantity?: number;
-  currentStock?: number
+  measureUnit: string;
+  stock: number;
 }

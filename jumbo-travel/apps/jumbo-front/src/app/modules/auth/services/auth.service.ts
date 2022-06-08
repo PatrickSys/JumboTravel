@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
 import { AuthConfig, OAuthService } from "angular-oauth2-oidc";
 import { BehaviorSubject, Observable } from "rxjs";
-import { EventsManagerService } from "@jumbo/core";
-import { WebsiteService } from "@jumbo/core";
+import { EventsManagerService, WebsiteService } from "@jumbo/core";
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +21,11 @@ export class AuthService  {
     this.guardAuth();
     this.listenLogOutEvent();
 
+
+
     this.oauthService.events.subscribe(eve => {
       console.log(eve);
-    })
+    });
   }
 
   private isTokenExpired(): boolean {
@@ -83,4 +84,8 @@ export class AuthService  {
     // @ts-ignore
     return this.oauthService.getIdentityClaims().name;
   }
+  get loginUser(): number {
+    return +(this.oauthService.getIdentityClaims() as { preferred_username: string }).preferred_username;
+  }
+
 }

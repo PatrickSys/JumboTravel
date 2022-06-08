@@ -22,6 +22,11 @@ export class EmployeesController {
     return this.employeesService.findOne(+id);
   }
 
+  @Get('/find/:loginId')
+  findByLoginId(@Param('loginId') loginId: number) {
+    return this.employeesService.findByLoginId(+loginId);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateEmployeeDto: UpdateEmployeeDto) {
     return this.employeesService.update(+id, updateEmployeeDto);

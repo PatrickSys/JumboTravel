@@ -2,8 +2,8 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document } from "mongoose";
 import mongoose from "mongoose";
 import { ApiProperty } from "@nestjs/swagger";
-import { planeModel } from "../modules/planes/planeTypes";
 import { Product } from "./product.schema";
+import { planeModel } from "../../../../../libs/core/src/lib/core/shared/types/planeModel";
 
 
 export type PlaneDocument = Plane & Document;

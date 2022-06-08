@@ -5,6 +5,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Product, ProductDocument } from "../../schemas/product.schema";
 import { Model } from "mongoose";
 import { Employee, EmployeeDocument } from "../../schemas/employee.schema";
+const { ObjectId } = require('mongodb');
 
 @Injectable()
 export class EmployeesService {
@@ -20,15 +21,19 @@ export class EmployeesService {
     return this.employeeModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} employee`;
+  async findByLoginId(loginId: number): Promise<Employee> {
+    return await this.employeeModel.findOne({loginIdentifier: loginId}).exec();
   }
 
-  update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
-    return `This action updates a #${id} employee`;
+  async findOne(id: number) {
+    return await this.employeeModel.findById(id).exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} employee`;
+  async update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
+    return await this.employeeModel.findOneAndUpdate({_id: ObjectId(id)}, updateEmployeeDto, {new:true}).exec();
+  }
+
+  async remove(id: number) {
+    return await this.employeeModel.deleteOne({_id: ObjectId(id)}).exec();
   }
 }

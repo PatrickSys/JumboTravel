@@ -1,13 +1,13 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
+import { Injectable } from "@nestjs/common";
+import { UpdateProductDto } from "./dto/update-product.dto";
 import { InjectModel } from "@nestjs/mongoose";
 import { Product, ProductDocument } from "../../schemas/product.schema";
 import { Model } from "mongoose";
+
 const { ObjectId } = require('mongodb');
 
 @Injectable()
-export class ProductsService {
+export class ProductsService{
 
   constructor(@InjectModel(Product.name) private productModel: Model<ProductDocument>) {}
 
@@ -21,7 +21,7 @@ export class ProductsService {
   }
 
   findOne(id: string) {
-    return this.productModel.findOne()
+    return this.productModel.findOne({_id: ObjectId(id)})
   }
 
   async update(id: string, updateProductDto: UpdateProductDto) {

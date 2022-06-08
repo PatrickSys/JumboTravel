@@ -11,11 +11,15 @@ export type EmployeeDocument = Employee & Document;
 export class Employee {
   @ApiProperty()
   @Prop({ required: true })
+  loginIdentifier: number;
+
+  @ApiProperty()
+  @Prop({ required: true })
   name: string;
 
   @ApiProperty()
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Plane", required: true })
-  plane: Plane;
+  plane: string;
 
   @ApiProperty()
   @Prop({ required: true })

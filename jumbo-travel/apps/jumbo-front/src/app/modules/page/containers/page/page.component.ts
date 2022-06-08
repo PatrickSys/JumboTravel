@@ -6,6 +6,10 @@ import {
 } from "../../../../../../../../libs/core/src/lib/core/shared/services/config/app-config.service";
 import { Logger } from "@nestjs/common";
 import { Router } from "@angular/router";
+import { EmployeesService } from "../../../dashboard/services/employees.service";
+import { EmployeeInterface } from "@jumbo/core";
+import { map } from "rxjs";
+import { role } from "../../../../../../../../libs/core/src/lib/core/shared/types/roleTypes";
 
 @Component({
   selector: 'jumbo-travel-page',
@@ -16,11 +20,16 @@ export class PageComponent implements OnInit {
 
   sideNavMode: MatDrawerMode = 'over';
 
-  constructor(private authService: AuthService, private appConfig: AppConfigService, private router: Router) {}
+  constructor(private authService: AuthService, private appConfig: AppConfigService, private router: Router,
+              private employeesService: EmployeesService) {}
 
   ngOnInit(): void {
     this.appConfig.userName = this.authService.userName;
-    this.router.navigate(['/assistant'])
+    this.appConfig.loginUser = this.authService.loginUser;
+    this.employeesService.findEmployeeByidentifier(this.appConfig.loginUser).pipe(map((employee: EmployeeInterface) => employee.role))
+      .subscribe((role: role) => {
+      this.router.navigate([`/${role}`])
+    });
   }
 
   logOut() {

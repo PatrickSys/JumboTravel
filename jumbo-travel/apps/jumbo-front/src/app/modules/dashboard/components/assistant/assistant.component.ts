@@ -8,6 +8,9 @@ import { Debugger } from "inspector";
 import {
   AppConfigService
 } from "../../../../../../../../libs/core/src/lib/core/shared/services/config/app-config.service";
+import { Employee } from "apps/jumbo-api/src/app/schemas/employee.schema";
+import { EmployeesService } from "../../services/employees.service";
+import { Plane } from "../../../../../../../jumbo-api/src/app/schemas/plane.schema";
 
 @Component({
   selector: 'jumbo-travel-assistant',
@@ -18,30 +21,40 @@ import {
 
 export class AssistantComponent implements OnInit {
 
-  displayedColumns: string[] = [ 'name', 'price', 'maxstock', 'orderQuantity', 'currstock'];
+  displayedColumns: string[] = [ 'name', 'price', 'maxStock', 'stock', 'orderQuantity'];
   products: ProductsInterface[] | undefined;
   formControl = new FormControl(0, [Validators.required, Validators.min(0)]);
   formGroup: FormGroup;
-  _products: ProductsInterface[] | undefined;
+  //_products: ProductsInterface[] | undefined;
   userName: string | undefined;
+  loginUser: number | undefined;
+  employeeData: any;
+  plane: Plane;
 
-  constructor(private productsService: ProductsService, private appConfig: AppConfigService) {
+  constructor(private productsService: ProductsService, private appConfig: AppConfigService, private employeesService: EmployeesService) {
     this.formGroup = new FormGroup({
       formControl: new FormControl(0, Validators.min(0)),
     });
     this.userName = this.appConfig.userName;
+    this.loginUser = this.appConfig.loginUser;
+
+    if(this.loginUser) {
+      this.employeesService.findEmployeeByidentifier(this.loginUser).subscribe((employee: any) => {
+        this.employeeData = employee;
+
+        this.productsService.getPlaneById(this.employeeData.plane).subscribe((plane: any) => {
+          this.plane = plane;
+          this.products = plane.productsStock;
+        });
+
+      });
 
 
-    this.productsService.getProducts().subscribe((products: ProductsInterface[]) => {
-      this._products = products;
+    }
 
-      this.productsService.getPlaneStock().subscribe((productss: any) => productss.forEach((product: ProductstockInterface) => {
-        this._products?.forEach(productt => {
-          if(productt._id == product.productId) productt.currentStock = product.stock;
-        })
-        this.products = this._products;
-      }));
-    });
+
+
+
   }
 
   ngOnInit(): void {}

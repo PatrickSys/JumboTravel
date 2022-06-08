@@ -7,3 +7,6 @@ export * from './lib/core/shared/globals/prod-globals';
 export * from './lib/core/modules/events/events.module'
 export * from './lib/core/shared/services/website/website.service'
 export * from './lib/core/shared/shared.module';
+export * from './lib/core/shared/interfaces/plane.interface';
+export * from './lib/core/shared/interfaces/employee.interface';
+export * from './lib/core/shared/interfaces/product.interface';
