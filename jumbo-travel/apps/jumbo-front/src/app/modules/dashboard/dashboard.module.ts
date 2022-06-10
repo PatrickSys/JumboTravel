@@ -19,7 +19,7 @@ import { RestockerComponent } from './components/restocker/restocker.component';
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
-    FormsModule,
+    FormsModule
   ],
 })
 export class DashboardModule {}

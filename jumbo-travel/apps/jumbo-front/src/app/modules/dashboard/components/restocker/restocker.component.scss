@@ -1,0 +1,31 @@
+@import "../../../../../styles";
+
+.table-container {
+  table {
+    width: 100%;
+  }
+  width: 80%;
+  margin-inline: auto;
+  padding-top: 64px;
+}
+
+.restocker-header {
+  margin-top: 48px;
+  display: flex;
+  font-size: 1.25rem;
+  justify-content: center;
+}
+.accept-button {
+  background-color: #2b4fe7;
+  color: white;
+}
+mat-icon {
+  margin-right: 8px;
+}
+
+.data {
+  line-height: 1.75rem;
+}
+.marg {
+  margin-right: 8px;
+}

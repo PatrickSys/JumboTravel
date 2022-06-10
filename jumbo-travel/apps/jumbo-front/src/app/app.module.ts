@@ -10,28 +10,23 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CoreModule, SharedModule } from "@jumbo/core";
 import { AppRoutingModule } from './modules/routing/app-routing.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
-import { JwtInterceptor } from "./modules/auth/interceptors/JwtInterceptor";
+import { AuthModule } from "./modules/auth/auth.module";
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     PageModule,
-    OAuthModule.forRoot({
-      resourceServer: {
-        sendAccessToken: true,
-        allowedUrls: ['http://localhost:3000'],
-      },
-    }),
     HttpClientModule,
     BrowserAnimationsModule,
     CoreModule,
     SharedModule,
     AppRoutingModule,
-    DashboardModule
+    DashboardModule,
+    AuthModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+
 ],
     bootstrap: [AppComponent],
 })

@@ -8,8 +8,8 @@
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
-    "front": "nx run jumbo-front:serve",
-    "api": "nx run jumbo-api:serve",
+    "front": "nx run jumbo-front:serve --ssl --ssl-key ./certs/local-key.pem --ssl-cert ./certs/local-cert.pem ",
+    "api": "nx run jumbo-api:serve ",
     "jumbo": "concurrently \"npm run front\"  \"npm run api\""
   },
   "private": true,

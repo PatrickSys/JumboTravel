@@ -1,0 +1,38 @@
+<div class="home-container" *ngIf="employeeData">
+  <div class="header">
+    Welcome {{employeeData.name}}
+    <br>
+    Access your Dashboard:
+    <button type="button" mat-raised-button *ngIf="employeeData.role === 'assistant'"
+            class="btnns"
+            (click)="navigateAssistantDB()">
+      <mat-icon>support_agent</mat-icon>
+      <span class="ordersBtn"
+      >Dashboard</span>
+
+    </button>
+
+    <button type="button" mat-raised-button *ngIf="employeeData.role !== 'assistant'"
+            class="btnns"
+            (click)="navigateRestockerDB()">
+      <span class="material-symbols-outlined">
+inventory
+</span>
+      <span class="ordersBtn"
+      >Dashboard</span>
+      </button>
+    <br>
+    Access Order Management:
+    <button type="button" mat-raised-button class="btnns"
+            (click)="navigateOrders()">
+
+      <mat-icon *ngIf="employeeData.role === 'assistant'"
+      >support_agent</mat-icon>
+      <span class="material-symbols-outlined" *ngIf="employeeData.role !== 'assistant'">
+inventory_2
+</span>
+      <span class="ordersBtn"
+      >View Orders</span>
+    </button>
+  </div>
+</div>

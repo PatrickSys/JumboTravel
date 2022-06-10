@@ -13,7 +13,9 @@ import { AuthModule } from './modules/auth/auth.module';
 
 //mongodb://admin:admin@localhost:27017
 @Module({
-  imports: [ConfigModule.forRoot(),
+  imports: [ConfigModule.forRoot({
+    envFilePath: ['../environments/.local.env']
+  }),
    MongooseModule.forRoot('mongodb://admin:admin@localhost:27017', {
      dbName: 'JumboDB'
    }),

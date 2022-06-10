@@ -5,7 +5,6 @@ import { SidenavComponent } from './containers/sidenav/sidenav.component';
 import { RouterModule } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { AuthService } from '../auth/services/auth.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { ToolbarComponent } from './containers/components/toolbar/toolbar.component';

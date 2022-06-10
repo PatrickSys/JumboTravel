@@ -1,0 +1,24 @@
+@import "../../../../../../styles";
+
+
+.dashboard-button {
+  width: 100%;
+  background-color: $jumbo-accent-500;
+  color: white;
+}
+
+.orders {
+  margin-top: 8px;
+  background-color: rebeccapurple;
+
+}
+.btnns {
+  color: white;
+  background-color: #2b4fe7;
+}
+.header {
+  display: flex;
+  flex-direction: column;
+  padding: 128px;
+}
+

@@ -1,0 +1,28 @@
+<div class="prod-container">
+  <table mat-table [dataSource]="products" class="mat-elevation-z8 table-cont" >
+
+  <ng-container matColumnDef="productName">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let product">{{product.productInfo.name}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="orderQuantity">
+    <th mat-header-cell *matHeaderCellDef> Order quantity </th>
+    <td mat-cell *matCellDef="let product"> {{product.amount}} {{product.productInfo.measureUnit}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="pricePerUnit">
+    <th mat-header-cell *matHeaderCellDef> Price per unit </th>
+    <td mat-cell *matCellDef="let product">{{product.productInfo.price}}€</td>
+  </ng-container>
+
+  <ng-container matColumnDef="totalPrice">
+    <th mat-header-cell *matHeaderCellDef> Total price </th>
+    <td mat-cell *matCellDef="let product"> {{product.amount * product.productInfo.price}}€  </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
