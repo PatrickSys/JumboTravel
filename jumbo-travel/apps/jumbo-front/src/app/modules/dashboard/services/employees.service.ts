@@ -1,19 +1,23 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { Employee } from "../../../../../../jumbo-api/src/app/schemas/employee.schema";
-import { WebsiteService } from "@jumbo/core";
+import { EmployeeInterface, WebsiteService } from "@jumbo/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class EmployeesService {
 
   apiUrl: string = this.websiteService.globals.apiUrl;
 
-  constructor(private websiteService: WebsiteService, private http: HttpClient) { }
+  constructor(private websiteService: WebsiteService, private http: HttpClient) {
+  }
 
-  findEmployeeByidentifier(userIdentifier: number): Observable<Employee>{
-    return this.http.get<Employee>(`${this.apiUrl}/employees/find/${userIdentifier}`)
+  findEmployeeByidentifier(userIdentifier: number): Observable<EmployeeInterface> {
+    return this.http.get<EmployeeInterface>(`${this.apiUrl}/employees/find/${userIdentifier}`);
+  }
+
+  listenOnNotifications() {
+    return new EventSource(`${this.apiUrl}/employees/sse`);
   }
 }

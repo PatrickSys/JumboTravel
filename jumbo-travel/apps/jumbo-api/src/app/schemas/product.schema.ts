@@ -17,7 +17,7 @@ export class Product implements ProductInterface {
   price: number;
 
   @ApiProperty()
-  @Prop({ required: true })
+  @Prop({ required: false })
   maxStock: number;
 
   @ApiProperty()

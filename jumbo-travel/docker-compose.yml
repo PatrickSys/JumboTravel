@@ -15,6 +15,7 @@ services:
     volumes:
       - ./keycloak/scripts/disable-theme-cache.cli:/opt/jboss/startup-scripts/disable-theme-cache.cli
       - ./keycloak/themes/jumbo:/opt/jboss/keycloak/themes/jumbo
+      - ./keycloak/themes/demo:/opt/jboss/keycloak/themes/demo
     restart: always
 
   mongo:

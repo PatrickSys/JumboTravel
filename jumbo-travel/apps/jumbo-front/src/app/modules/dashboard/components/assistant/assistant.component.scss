@@ -22,3 +22,28 @@
   color: white;
   left: calc(50% - 5vw);
 }
+input {
+  width: 80%;
+}
+mat-icon {
+  margin-right: 8px;
+}
+
+.fa-solid {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  color: rebeccapurple;
+  vertical-align: middle;
+  margin-inline: 8px;
+  font-size: 1.75rem;
+}
+
+.data {
+  line-height: 1.75rem;
+}
+
+.fly-button {
+  margin-left: 8px;
+  vertical-align: bottom;
+  background: center;
+}

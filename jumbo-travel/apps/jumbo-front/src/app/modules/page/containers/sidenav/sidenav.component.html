@@ -2,14 +2,35 @@
   <mat-sidenav class="main-sidenav" #sideNav [mode]="sideNavMode">
     <img src="assets/menulogo.png" alt="menu logo" class="logo">
     <button class="dashboard-button" mat-raised-button
-            (click)="navigateAssistant()"
+            (click)="navigateToDashboard()"
     >
-      <mat-icon>support_agent</mat-icon>
+       <span class="material-symbols-outlined" *ngIf="!isAssistant ">
+inventory
+</span>
+      <mat-icon *ngIf="isAssistant"
+      >support_agent</mat-icon>
       <span>Dashboard</span>
+    </button>
+    <button class="dashboard-button orders" mat-raised-button
+            (click)="navigateToOrders()"
+    >
+      <mat-icon
+      *ngIf="isAssistant">support_agent</mat-icon>
+      <span class="material-symbols-outlined" *ngIf="!isAssistant">
+inventory_2
+</span>
+      <span class="ordersBtn"
+        *ngIf="isAssistant"
+      >View Orders</span>
+      <span
+        class="ordersBtn"
+        *ngIf="!isAssistant"
+      >Manage Orders</span>
     </button>
   </mat-sidenav>
 
   <mat-sidenav-content>
+    <img src="assets/backgroundimage.png" class="bg-image">
     <jumbo-toolbar (burgerClicked)="toggleSideNav()"></jumbo-toolbar>
     <jumbo-travel-page></jumbo-travel-page>
   </mat-sidenav-content>

@@ -19,12 +19,15 @@ async function bootstrap() {
     res.header('Access-Control-Allow-Headers', 'Content-Type, Accept');
     next();
   });
+
   // Swagger config
+
   const config = new DocumentBuilder()
     .setTitle('Jumbo Api')
     .setDescription('Overview of Jumbo Api')
     .setVersion('1.0')
     .addTag('jumbo')
+    .addBearerAuth()
     .build();
   const options: SwaggerDocumentOptions =  {
     operationIdFactory: (

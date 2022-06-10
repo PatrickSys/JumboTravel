@@ -9,6 +9,7 @@ import { PlanesModule } from "./modules/planes/planes.module";
 import { EmployeesModule } from "./modules/employees/employees.module";
 import { OrdersModule } from "./modules/orders/orders.module";
 import { RoutesModule } from "./modules/routes/routes.module";
+import { AuthModule } from './modules/auth/auth.module';
 
 //mongodb://admin:admin@localhost:27017
 @Module({
@@ -20,7 +21,8 @@ import { RoutesModule } from "./modules/routes/routes.module";
     PlanesModule,
     EmployeesModule,
     OrdersModule,
-    RoutesModule
+    RoutesModule,
+    AuthModule
 ],
   controllers: [AppController],
   providers: [AppService],

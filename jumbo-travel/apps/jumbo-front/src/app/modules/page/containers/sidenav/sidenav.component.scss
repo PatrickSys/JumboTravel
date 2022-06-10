@@ -5,13 +5,22 @@
     height: calc(100vh);
   }
 }
+
 .main-sidenav {
   width: 215px;
+
   .dashboard-button {
     width: 100%;
     background-color: $jumbo-accent-500;
     color: white;
   }
+
+  .orders {
+    margin-top: 8px;
+    background-color: rebeccapurple;
+
+  }
+
 
   .logo {
     width: calc(100% - 16px);
@@ -21,7 +30,15 @@
   button {
     display: flex;
   }
+
   mat-icon {
     margin-right: 16px;
   }
+}
+.bg-image {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  opacity: .75;
+  z-index: -1;
 }

@@ -1,3 +1,8 @@
 export enum Events{
-  logOut
+  logOut,
+  navigateAssistantDB,
+  navigateOrders,
+  navigateRestockerDB,
+  orderRequested,
+  orderApproved
 }

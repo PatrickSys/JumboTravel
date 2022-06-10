@@ -11,7 +11,12 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { ToolbarComponent } from './containers/components/toolbar/toolbar.component';
 import { FormsModule } from '@angular/forms';
 import { MenuComponent } from './containers/components/menu/menu.component';
-import { MatMenuModule } from "@angular/material/menu";
+import { MatMenuModule } from '@angular/material/menu';
+import { OrdersComponent } from './containers/components/orders/orders.component';
+import { MatTableModule } from '@angular/material/table';
+import { ProductsDialogComponent } from './containers/components/products-dialog/products-dialog.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { HomeComponent } from './containers/components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +24,9 @@ import { MatMenuModule } from "@angular/material/menu";
     SidenavComponent,
     ToolbarComponent,
     MenuComponent,
+    OrdersComponent,
+    ProductsDialogComponent,
+    HomeComponent,
   ],
   providers: [],
   exports: [PageComponent, SidenavComponent],
@@ -30,7 +38,9 @@ import { MatMenuModule } from "@angular/material/menu";
     MatButtonModule,
     MatSidenavModule,
     FormsModule,
-    MatMenuModule
-  ]
+    MatMenuModule,
+    MatTableModule,
+    MatDialogModule,
+  ],
 })
 export class PageModule {}

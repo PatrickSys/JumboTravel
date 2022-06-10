@@ -13,12 +13,7 @@ export class EventsManagerService {
   private events$: Observable<any> = this.eventsSubject.asObservable();
   events = Events;
 
-  constructor() {
-    this.events$.subscribe((he: any) => {
-      console.log('heyo');
-
-    });
-  }
+  constructor() {}
 
 
   listenEvent(name: Events, callback: Function): void {

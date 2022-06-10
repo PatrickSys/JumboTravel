@@ -5,7 +5,13 @@
   >
     <mat-icon>menu</mat-icon>
   </button>
-  <span class="company-title">JumboTravel</span>
+
+
+  <button type="button" mat-icon-button
+          (click)="navigateHome()"
+  >
+    <span class="company-title">JumboTravel</span>
+  </button>
 
  <jumbo-travel-menu
    (logOutEvent)="logOut()"

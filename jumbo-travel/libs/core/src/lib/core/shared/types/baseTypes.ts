@@ -6,9 +6,10 @@ export interface BaseCode {
 
 
 export const baseCodes: BaseCode = {
-  'pmi': 'Barcelona',
+  'pmi': 'Palma de Mallorca',
   'mad': 'Madrid',
   'sev': 'Sevilla',
   'bio': 'Bilbao',
-  'vlc': 'Valencia'
+  'vlc': 'Valencia',
+  'bcn': 'Barcelona'
 }

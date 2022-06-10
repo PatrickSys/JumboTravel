@@ -27,7 +27,7 @@ export class PlanesService {
     }).exec();
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     return await this.planeModel.findOne({id: id}).populate({
       path: 'productsStock',
       populate: {
@@ -41,7 +41,14 @@ export class PlanesService {
     return await this.planeModel.findOneAndUpdate({ _id: ObjectId(id) }, updatePlaneDto, {new: true}).exec();
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} plane`;
+  }
+
+  async updateStatus(id: string, newStatus: any) {
+    const foundPlane = await this.planeModel.findOne({_id: ObjectId(id)});
+    foundPlane.route.status = newStatus.newStatus;
+
+    return await this.planeModel.updateOne({ _id: ObjectId(id) }, { route: foundPlane.route }, {new: true}).exec();
   }
 }

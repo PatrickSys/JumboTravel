@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "@angular/material/prebuilt-themes/deeppurple-amber.css";
 
-
 $jumbo-primary-300: rgb(98, 0, 238, 0.664);
 $jumbo-primary-400: rgb(98, 0, 238, 0.881);
 $jumbo-primary-500: rgb(98, 0, 238, 1);
@@ -9,7 +8,18 @@ $jumbo-accent-500: rgb(43 79 231);
 
 body {
   margin: 0;
+  font-family: Open Sans !important;
 }
 .mat-menu-panel {
   margin-top: 22px;
+}
+.toast-container {
+  margin-top: 64px;
+}
+.toast-success {
+  background-color: #1f9c0e;
+}
+
+mat-dialog-container {
+  padding: 8px !important;
 }

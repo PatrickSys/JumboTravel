@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ProductInterface, WebsiteService } from "@jumbo/core";
+import { PlaneInterface, ProductInterface, WebsiteService } from "@jumbo/core";
 import { HttpClient } from "@angular/common/http";
 import { ObjectUnsubscribedError, Observable } from "rxjs";
 import { ProductStockInterface } from "../../../../../../../libs/core/src/lib/core/shared/interfaces/product-stock";
@@ -22,7 +22,7 @@ export class ProductsService {
       return this.http.get<ProductStockInterface[]>(`${this.apiUrl}/planes`);
   }
 
-  getPlaneById(id: string): Observable<any> {
-    return this.http.get<ProductStockInterface[]>(`${this.apiUrl}/planes/${id}`);
+  getPlaneById(id: string): Observable<PlaneInterface> {
+    return this.http.get<PlaneInterface>(`${this.apiUrl}/planes/${id}`);
   }
 }

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Router } from "@angular/router";
 import { EventsManagerService } from "@jumbo/core";
 import { Events } from "../../../../../../../../../libs/core/src/lib/core/modules/events/events.enum";
 
@@ -14,19 +15,22 @@ export class ToolbarComponent implements OnInit {
 
 
 
-  constructor(private eventsManager: EventsManagerService) {}
+  constructor(private eventsManager: EventsManagerService,
+              private router: Router) {}
 
   ngOnInit(): void {
 
   }
 
   logOut(): void {
-    console.log('ha');
     this.eventsManager.sendEvent({name: Events.logOut});
   }
 
   clickBurger() {
     this.burgerClicked.emit();
+  }
+  navigateHome(): void {
+    this.router.navigate(['/home'])
   }
 }
 
